@@ -2,7 +2,18 @@ const Telegraf = require('telegraf');
 const config = require('./config');
 const routes = require('./routes');
 
+const express = require('express');
+const app = express();
+
 const bot = new Telegraf(config.botToken);
+
+app.get('/', (req, res, next) => {
+    res.json({ "pesan": "sukses" });
+});
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log('success');
+})
 
 bot.start(ctx => {
     const username = ctx.update.message.from.username;
