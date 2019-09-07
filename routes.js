@@ -7,4 +7,10 @@ const commands = [
     }
 ];
 
-module.exports = commands;
+const events = [
+    {
+        event: 'new_chat_members'
+    }
+];
+
+module.exports = [...commands, ...events];

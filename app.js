@@ -14,6 +14,13 @@ routes.forEach(item => {
             ctx.reply(`halo kak @${username}, kaka sekarang menuju menu ${message}`);
         });
     }
+
+    if (item.event) {
+        bot.on(item.event, (ctx) => {
+            const username = ctx.update.message.from.username;
+            ctx.reply(`halo kaka ${username} selamat datang di grup bucin`);
+        });
+    }
 });
 
 bot.launch();
