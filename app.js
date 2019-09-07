@@ -17,10 +17,12 @@ routes.forEach(item => {
 
     if (item.event) {
         bot.on(item.event, (ctx) => {
-            const username = ctx.update.message.left_chat_member.username;
-            ctx.reply(`Loh kak @${username} kok keluar ?`);
-            // const username = ctx.update.message.new_chat_members[0].username;
-            // ctx.reply(`halo kaka @${username} selamat datang di grup bucin`);
+            if (item.event == 'left_chat_member') {
+                const username = ctx.update.message.left_chat_member.username;
+                ctx.reply(`Loh kak @${username} kok keluar ?`);
+            }
+            const username = ctx.update.message.new_chat_members[0].username;
+            ctx.reply(`halo kaka @${username} selamat datang di grup bucin`);
         });
     }
 });
