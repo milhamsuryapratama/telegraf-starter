@@ -1,0 +1,15 @@
+{
+  "name": "belajar-telegraf",
+  "version": "1.0.0",
+  "main": "app.js",
+  "start": {
+    "start": "nodemon app.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "telegraf": "^3.32.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
