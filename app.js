@@ -4,7 +4,10 @@ const routes = require('./routes');
 
 const bot = new Telegraf(config.botToken);
 
-bot.start((ctx) => ctx.reply('Welcome'));
+bot.start(ctx => {
+    const username = ctx.update.message.from.username;
+    ctx.reply(`Halo kaka @${username}, selamat datang di grup bucin`)
+});
 
 routes.forEach(item => {
     if (item.command) {
