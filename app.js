@@ -10,7 +10,7 @@ routes.forEach(item => {
     if (item.command) {
         bot.command(item.command, (ctx) => {
             const message = ctx.update.message.text;
-            const username = context.update.message.from.username;
+            const username = ctx.update.message.from.username;
             ctx.reply(`halo kak @${username}, kaka sekarang menuju menu ${message}`);
         });
     }
