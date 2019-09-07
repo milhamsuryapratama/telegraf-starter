@@ -6,6 +6,7 @@ const bot = new Telegraf(config.botToken);
 
 bot.start((ctx) => ctx.reply('Welcome'));
 
+//ini routing
 routes.forEach(item => {
     if (item.command) {
         bot.command(item.command, (ctx) => {
