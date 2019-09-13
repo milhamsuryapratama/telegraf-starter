@@ -29,10 +29,10 @@ app.get('/', (req, res, next) => {
             });
         }
     });
+
+    bot.launch();
 });
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('success');
-})
-
-bot.launch();
+});
