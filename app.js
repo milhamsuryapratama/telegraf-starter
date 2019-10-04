@@ -31,10 +31,10 @@ routes.forEach(item => {
 
 bot.launch();
 
-cron.schedule('*/30 * * * *', () => {
-    // console.log('Runing a job at 01:00 at America/Sao_Paulo timezone');
+cron.schedule('*/28 * * * *', () => {
     app.get('/', (req, res) => {
-        console.log('run again');
+        console.log('lagi');
+        // refresh();
     });
 });
 
