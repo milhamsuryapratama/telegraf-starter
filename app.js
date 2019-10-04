@@ -3,6 +3,7 @@ const config = require('./config');
 const routes = require('./routes');
 
 const express = require('express');
+const cron = require("node-cron");
 const app = express();
 
 const bot = new Telegraf(config.botToken);
@@ -31,6 +32,13 @@ app.get('/', (req, res, next) => {
     });
 
     bot.launch();
+});
+
+cron.schedule('*/30 * * * *', () => {
+    // console.log('Runing a job at 01:00 at America/Sao_Paulo timezone');
+    app.get('/', (req, res) => {
+        console.log('run again');
+    });
 });
 
 app.listen(process.env.PORT || 3000, () => {
