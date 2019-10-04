@@ -34,7 +34,6 @@ bot.launch();
 cron.schedule('*/28 * * * *', () => {
     app.get('/', (req, res) => {
         console.log('lagi');
-        // refresh();
     });
 });
 
