@@ -51,6 +51,14 @@ cron.schedule('0 */25 * * * *', () => {
         })
 });
 
+cron.schedule('0 6 * * *', () => {
+    bot.telegram.sendMessage('547059684', 'gas yolo');
+    // console.log('Runing a job at 06:00 at Indonesia/Jakarta');
+  }, {
+    scheduled: true,
+    timezone: "Indonesia/Jakarta"
+  });
+
 app.listen(process.env.PORT || 3000, () => {
     console.log('success');
 });
