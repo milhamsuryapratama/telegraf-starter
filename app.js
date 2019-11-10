@@ -40,9 +40,15 @@ cron.schedule('* * * * * *', () => {
     // const express1 = require('express');
     // const app1 = express1();
     // console.log("1");
-    axios.get('https://bot-ilham.herokuapp.com/', function() {
-        console.log('gas');
-    });
+    axios.get('https://bot-ilham.herokuapp.com/')
+        .then(function (response) {
+            // handle success
+            console.log('gas');
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
 });
 
 app.listen(process.env.PORT || 3000, () => {
