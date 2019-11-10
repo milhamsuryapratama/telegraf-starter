@@ -36,7 +36,7 @@ routes.forEach(item => {
 
 bot.launch();
 
-cron.schedule('* * * * * *', () => {
+cron.schedule('0 */25 * * * *', () => {
     // const express1 = require('express');
     // const app1 = express1();
     // console.log("1");
