@@ -10,7 +10,7 @@ const cron = require("node-cron");
 const bot = new Telegraf(config.botToken);
 
 app.get('/', (req, res) => {
-   console.log("base");
+    res.send("HALO");
 });
 
 bot.start(ctx => {
