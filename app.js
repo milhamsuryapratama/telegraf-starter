@@ -1,12 +1,17 @@
 const Telegraf = require('telegraf');
 const config = require('./config');
 const routes = require('./routes');
+const axios = require('axios');
 
 const express = require('express');
-const cron = require("node-cron");
 const app = express();
+const cron = require("node-cron");
 
 const bot = new Telegraf(config.botToken);
+
+app.get('/', (req, res) => {
+   console.log("base");
+});
 
 bot.start(ctx => {
     const username = ctx.update.message.from.username;
@@ -31,9 +36,12 @@ routes.forEach(item => {
 
 bot.launch();
 
-cron.schedule('*/28 * * * *', () => {
-    app.get('/', (req, res) => {
-        console.log('lagi');
+cron.schedule('* * * * * *', () => {
+    // const express1 = require('express');
+    // const app1 = express1();
+    // console.log("1");
+    axios.get('https://bot-ilham.herokuapp.com/', function() {
+        console.log('gas');
     });
 });
 
