@@ -13,6 +13,21 @@ app.get('/', (req, res) => {
     res.send("HALO");
 });
 
+function formatDate(date) {
+    var monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+  
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+  
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  }
+
 bot.start(ctx => {
     const username = ctx.update.message.from.username;
     ctx.reply(`Halo kaka @${username}, selamat datang di grup bucin`)
