@@ -67,7 +67,25 @@ cron.schedule('0 */25 * * * *', () => {
 });
 
 cron.schedule('0 6 * * *', () => {
-    bot.telegram.sendMessage('547059684', 'gas yolo');
+    axios.get('http://api.openweathermap.org/data/2.5/weather?q=Paiton,ina&APPID=c3a30d9189bba5ae819a95aa53ecb50b&units=metric')
+        .then(function (response) {
+            console.log(response.data.weather);
+            //-1001374864884
+            //547059684
+            bot.telegram.sendMessage('-1001374864884', `
+                Cuaca Hari Ini 
+                Date : ${new Date()} 
+                Location : ${response.data.name} 
+                Weather : ${response.data.weather[0].description}  
+                Temperature : ${response.data.main.temp} Celcius 
+                Min temperature : ${response.data.main.temp_min} Celcius 
+                Max temperature : ${response.data.main.temp_max} Celcius 
+                Wind speed : ${response.data.wind.speed} meter/sec
+            `);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })    
     // console.log('Runing a job at 06:00 at Indonesia/Jakarta');
   }, {
     scheduled: true,
