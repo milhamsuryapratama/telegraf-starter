@@ -54,11 +54,9 @@ bot.launch();
 cron.schedule('0 */25 * * * *', () => {
     axios.get('https://bot-ilham.herokuapp.com/')
         .then(function (response) {
-            // handle success
             console.log('gas');
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
         })
 });
