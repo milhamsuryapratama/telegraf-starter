@@ -52,9 +52,6 @@ routes.forEach(item => {
 bot.launch();
 
 cron.schedule('0 */25 * * * *', () => {
-    // const express1 = require('express');
-    // const app1 = express1();
-    // console.log("1");
     axios.get('https://bot-ilham.herokuapp.com/')
         .then(function (response) {
             // handle success
