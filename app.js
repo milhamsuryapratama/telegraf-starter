@@ -28,9 +28,14 @@ function formatDate(date) {
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
   }
 
+bot.hears('jancok|cok|anjir|njirr|anjing|kontol|jing', ctx => {
+    const username = context.update.message.from.username;
+    ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya`);
+});
+
 bot.start(ctx => {
     const username = ctx.update.message.from.username;
-    ctx.reply(`Halo kaka @${username}, selamat datang di grup bucin`)
+    ctx.reply(`Halo kaka @${username}, selamat datang di grup bucin`);
 });
 
 routes.forEach(item => {
@@ -81,7 +86,6 @@ cron.schedule('0 6 * * *', () => {
         .catch(function (error) {
             console.log(error);
         })    
-    // console.log('Runing a job at 06:00 at Indonesia/Jakarta');
   }, {
     scheduled: true,
     timezone: "Asia/Jakarta"
