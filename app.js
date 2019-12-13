@@ -34,8 +34,11 @@ bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk)/i, ctx 
 });
 
 bot.start(ctx => {
+    const chatId = ctx.update.message.chat.id;
     const username = ctx.update.message.from.username;
-    ctx.reply(`Halo kaka @${username}, selamat datang di grup bucin`);
+    const messageId = ctx.update.message.message_id;
+    // ctx.reply(`Halo kaka @${username}, selamat datang di grup bucin`);
+    bot.telegram.sendMessage(chatId, `Halo kaka @${username}, selamat datang di grup bucin`, messageId);
 });
 
 routes.forEach(item => {
