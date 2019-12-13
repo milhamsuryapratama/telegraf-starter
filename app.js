@@ -30,7 +30,7 @@ function formatDate(date) {
 
 bot.hears('jancok|cok|anjir|njirr|anjing|kontol|jing', ctx => {
     const username = context.update.message.from.username;
-    ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya`);
+    ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!!`);
 });
 
 bot.start(ctx => {
