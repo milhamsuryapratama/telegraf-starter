@@ -54,8 +54,6 @@ routes.forEach(item => {
     }
 });
 
-bot.launch();
-
 cron.schedule('0 */25 * * * *', () => {
     axios.get('https://bot-ilham.herokuapp.com/')
         .then(function (response) {
@@ -90,6 +88,8 @@ cron.schedule('0 6 * * *', () => {
     scheduled: true,
     timezone: "Asia/Jakarta"
   });
+
+bot.launch();
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('success');
