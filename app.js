@@ -33,7 +33,7 @@ bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk)/i, ctx 
     const chatId = ctx.update.message.chat.id;
     const messageId = ctx.update.message.message_id;
     // ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!!`, messageId);
-    bot.telegram.sendMessage(chatId, `Halo kaka @${username}, selamat datang di grup bucin`, [reply_to_message_id => messageId]);
+    bot.telegram.sendMessage(chatId, `Halo kaka @${messageId}, selamat datang di grup bucin`, [reply_to_message_id => messageId]);
 });
 
 bot.start(ctx => {    
