@@ -28,10 +28,10 @@ function formatDate(date) {
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
   }
 
-bot.hears('jancok|cok|anjir|njirr|anjing|kontol|jing', ctx => {
-    const username = context.update.message.from.username;
-    ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!!`);
-});
+// bot.hears('jancok|cok|anjir|njirr|anjing|kontol|jing', ctx => {
+//     const username = context.update.message.from.username;
+//     ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!!`);
+// });
 
 bot.start(ctx => {
     const username = ctx.update.message.from.username;
