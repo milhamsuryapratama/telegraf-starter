@@ -32,6 +32,7 @@ function formatDate(date) {
   }
 
 bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk|tae)/i, ctx => {
+    console.log(ctx);
     const username = ctx.update.message.from.username;
     const userId = ctx.update.message.from.id;
     const chatId = ctx.update.message.chat.id;
