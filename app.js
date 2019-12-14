@@ -40,7 +40,7 @@ bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk|tae)/i, 
     ctx.session.username = ctx.session.username || 0;
     ctx.session.username++;
 
-    ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!! kak @${username} sudah ${ctx.session.username} kali ngomong jorok ya. Nanti aku kick baru tau rasa.`, Object.assign({ 'reply_to_message_id': messageId }));
+    ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!! \n \n kak @${username} sudah ${ctx.session.username} kali ngomong jorok ya. Nanti aku kick baru tau rasa.`, Object.assign({ 'reply_to_message_id': messageId }));
     // if (ctx.session.username > 3) {
     //     ctx.session.username = 0;
     //     ctx.restrictChatMember(chatId, userId, Object.assign({ 'permissions': { 'can_send_messages': false } }));
