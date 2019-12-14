@@ -2,12 +2,15 @@ const Telegraf = require('telegraf');
 const config = require('./config');
 const routes = require('./routes');
 const axios = require('axios');
+const session = require('telegraf/session');
 
 const express = require('express');
 const app = express();
 const cron = require("node-cron");
 
 const bot = new Telegraf(config.botToken);
+
+bot.use(session());
 
 app.get('/', (req, res) => {
     res.send("HALO");
@@ -28,11 +31,14 @@ function formatDate(date) {
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
   }
 
-bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk)/i, ctx => {
+bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk|tae)/i, ctx => {
     const username = ctx.update.message.from.username;
-    const chatId = ctx.update.message.chat.id;
+    // const chatId = ctx.update.message.chat.id;
     const messageId = ctx.update.message.message_id;
-    ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!!`, Object.assign({ 'reply_to_message_id': messageId }));
+    ctx.session.username = ctx.session.username || 0;
+    ctx.session.username++;
+    // ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!!`, Object.assign({ 'reply_to_message_id': messageId }));
+    ctx.reply(`Message counter:${ctx.session.username}`)
     // bot.telegram.sendMessage(chatId, `Halo kaka @${messageId}, selamat datang di grup bucin`, ['reply_to_message_id' => messageId]);
 });
 
