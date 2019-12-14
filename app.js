@@ -42,7 +42,7 @@ bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk|tae)/i, 
 
     if (ctx.session.username > 3) {
         ctx.session.username = 0;
-        ctx.restrictChatMember(chatId, userId, Object.assign({ 'can_send_messages': false }));
+        ctx.restrictChatMember(chatId, '547059684', Object.assign({ 'can_send_messages': false }));
     } else {
         ctx.reply(`Halo kaka @${username}, kalau ngomong yang sopan ya!!!`, Object.assign({ 'reply_to_message_id': messageId }));
     }    
