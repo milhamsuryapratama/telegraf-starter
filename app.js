@@ -80,7 +80,7 @@ routes.forEach(item => {
                             'status': status,
                             'jumlah': jumlah
                         });
-                        msg += `${status} : ${jumlah}, `;
+                        msg += `\n ${status} : ${jumlah} \n `;
                     });
 
                     
