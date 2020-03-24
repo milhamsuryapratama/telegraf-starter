@@ -4,6 +4,8 @@ const routes = require('./routes');
 const axios = require('axios');
 const session = require('telegraf/session');
 
+const cheerio = require('cheerio');
+
 const express = require('express');
 const app = express();
 const cron = require("node-cron");
@@ -12,24 +14,26 @@ const bot = new Telegraf(config.botToken);
 
 bot.use(session());
 
+const url = 'https://www.kemkes.go.id/';
+
 app.get('/', (req, res) => {
     res.send("HALO");
 });
 
 function formatDate(date) {
     var monthNames = [
-      "January", "February", "March",
-      "April", "May", "June", "July",
-      "August", "September", "October",
-      "November", "December"
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
     ];
-  
+
     var day = date.getDate();
     var monthIndex = date.getMonth();
     var year = date.getFullYear();
-  
+
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
-  }
+}
 
 bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk|tae)/i, ctx => {
     // console.log(ctx.update.message.from);
@@ -45,15 +49,15 @@ bot.hears(/(jancuk|kontol|memek|goblok|tolol|anjing|jing|cok|jancok|cuk|tae)/i, 
     //     ctx.session.username = 0;
     //     ctx.restrictChatMember(chatId, userId, Object.assign({ 'permissions': { 'can_send_messages': false } }));
     // } else {
-        
+
     // }    
     // ctx.reply(`Message counter:${ctx.session.username}`)
     // bot.telegram.sendMessage(chatId, `Halo kaka @${messageId}, selamat datang di grup bucin`, ['reply_to_message_id' => messageId]);
 });
 
-bot.start(ctx => {    
-    const username = ctx.update.message.from.username;   
-    ctx.reply(`Halo kaka @${username}, selamat datang di grup bucin`);    
+bot.start(ctx => {
+    const username = ctx.update.message.from.username;
+    ctx.reply(`Halo kaka @${username}, selamat datang di grup bucin`);
 });
 
 routes.forEach(item => {
@@ -63,6 +67,33 @@ routes.forEach(item => {
             const username = ctx.update.message.from.username;
             ctx.reply(`halo kak @${username}, kaka sekarang menuju menu ${message}`);
         });
+
+        if (item.command == "covid19") {
+            axios(url)
+                .then(response => {
+                    const html = response.data;
+                    const $ = cheerio.load(html);
+                    const statsTable = $('.info-case > table > tbody > tr');
+                    const data = [];
+                    let msg = "Data Covdi19 Nasional. ";
+                    statsTable.map(function (i) {
+                        if (i == 1) {
+                            return false;
+                        }
+                        const status = $(this).find('.description').text();
+                        const jumlah = $(this).find('.case').text();
+                        data.push({
+                            'status': status,
+                            'jumlah': jumlah
+                        });
+                        msg += `${status} : ${jumlah}, `;
+                    });
+
+                    
+                    console.log(msg);
+                })
+                .catch(console.error);
+        }
     }
 
     if (item.event) {
@@ -103,11 +134,11 @@ cron.schedule('0 6 * * *', () => {
         })
         .catch(function (error) {
             console.log(error);
-        })    
-  }, {
+        })
+}, {
     scheduled: true,
     timezone: "Asia/Jakarta"
-  });
+});
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('success');
