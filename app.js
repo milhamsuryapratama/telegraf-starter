@@ -70,17 +70,14 @@ routes.forEach(item => {
                     const statsTable = $('.info-case > table > tbody > tr');
                     const data = [];
                     let msg = "Data Covdi19 Nasional. ";
-                    statsTable.map(function (i) {
-                        if (i == 1) {
-                            return false;
-                        }
+                    statsTable.map(function (i) {                        
                         const status = $(this).find('.description').text();
                         const jumlah = $(this).find('.case').text();
                         data.push({
                             'status': status,
                             'jumlah': jumlah
                         });
-                        msg += `\n ${status} : ${jumlah} \n `;
+                        msg += `\n \n ${status} : ${jumlah} \n `;
                     });
 
                     
