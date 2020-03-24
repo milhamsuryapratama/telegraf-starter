@@ -61,31 +61,9 @@ bot.start(ctx => {
 });
 
 routes.forEach(item => {
-    if (item.command) {        
+    if (item.command) {
         if (item.command == "covid19") {
-            axios(url)
-                .then(response => {
-                    const html = response.data;
-                    const $ = cheerio.load(html);
-                    const statsTable = $('.info-case > table > tbody > tr');
-                    const data = [];
-                    let msg = "Data Covdi19 Nasional. ";
-                    statsTable.map(function (i) {                        
-                        const status = $(this).find('.description').text();
-                        const jumlah = $(this).find('.case').text();
-                        data.push({
-                            'status': status,
-                            'jumlah': jumlah
-                        });
-                        msg += `\n \n ${status} : ${jumlah} \n `;
-                    });
-
-                    
-                    bot.command(item.command, (ctx) => {
-                        ctx.reply(msg);
-                    });
-                })
-                .catch(console.error);
+            covidNasional(item.command);
         } else {
             bot.command(item.command, (ctx) => {
                 const message = ctx.update.message.text;
@@ -101,6 +79,32 @@ routes.forEach(item => {
         });
     }
 });
+
+function covidNasional(route) {
+    axios(url)
+        .then(response => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const statsTable = $('.info-case > table > tbody > tr');
+            const data = [];
+            let msg = "Data Covdi19 Nasional. ";
+            statsTable.map(function (i) {
+                const status = $(this).find('.description').text();
+                const jumlah = $(this).find('.case').text();
+                data.push({
+                    'status': status,
+                    'jumlah': jumlah
+                });
+                msg += `\n \n ${status} : ${jumlah} \n `;
+            });
+
+
+            bot.command(route, (ctx) => {
+                ctx.reply(msg);
+            });
+        })
+        .catch(console.error);
+}
 
 bot.launch();
 
