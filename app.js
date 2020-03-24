@@ -98,6 +98,7 @@ function covidNasional(route) {
                 msg += `\n \n ${status} : ${jumlah} \n `;
             });
 
+            msg += "\n Sumber : https://www.kemkes.go.id/"
 
             bot.command(route, (ctx) => {
                 ctx.reply(msg);
