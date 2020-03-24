@@ -61,13 +61,7 @@ bot.start(ctx => {
 });
 
 routes.forEach(item => {
-    if (item.command) {
-        bot.command(item.command, (ctx) => {
-            const message = ctx.update.message.text;
-            const username = ctx.update.message.from.username;
-            ctx.reply(`halo kak @${username}, kaka sekarang menuju menu ${message}`);
-        });
-
+    if (item.command) {        
         if (item.command == "covid19") {
             axios(url)
                 .then(response => {
@@ -93,6 +87,12 @@ routes.forEach(item => {
                     console.log(msg);
                 })
                 .catch(console.error);
+        } else {
+            bot.command(item.command, (ctx) => {
+                const message = ctx.update.message.text;
+                const username = ctx.update.message.from.username;
+                ctx.reply(`halo kak @${username}, kaka sekarang menuju menu ${message}`);
+            });
         }
     }
 
