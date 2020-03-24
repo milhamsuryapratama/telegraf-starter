@@ -120,25 +120,47 @@ cron.schedule('0 */25 * * * *', () => {
 });
 
 cron.schedule('0 6 * * *', () => {
-    axios.get('http://api.openweathermap.org/data/2.5/weather?q=Paiton,ina&APPID=c3a30d9189bba5ae819a95aa53ecb50b&units=metric')
-        .then(function (response) {
-            console.log(response.data.weather);
-            //-1001374864884
-            //547059684
-            bot.telegram.sendMessage('-1001374864884', `
-                Cuaca Hari Ini 
-                Date : ${new Date()} 
-                Location : ${response.data.name} 
-                Weather : ${response.data.weather[0].description}  
-                Temperature : ${response.data.main.temp} Celcius 
-                Min temperature : ${response.data.main.temp_min} Celcius 
-                Max temperature : ${response.data.main.temp_max} Celcius 
-                Wind speed : ${response.data.wind.speed} meter/sec
-            `);
+    axios(url)
+        .then(response => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const statsTable = $('.info-case > table > tbody > tr');
+            const data = [];
+            let msg = "Data Covdi19 Nasional. ";
+            statsTable.map(function (i) {
+                const status = $(this).find('.description').text();
+                const jumlah = $(this).find('.case').text();
+                data.push({
+                    'status': status,
+                    'jumlah': jumlah
+                });
+                msg += `\n \n ${status} : ${jumlah} \n `;
+            });
+
+            msg += "\n Sumber : https://www.kemkes.go.id/"
+
+            bot.telegram.sendMessage('-1001374864884', msg);
         })
-        .catch(function (error) {
-            console.log(error);
-        })
+        .catch(console.error);
+    // axios.get('http://api.openweathermap.org/data/2.5/weather?q=Paiton,ina&APPID=c3a30d9189bba5ae819a95aa53ecb50b&units=metric')
+    //     .then(function (response) {
+    //         console.log(response.data.weather);
+    //         //-1001374864884
+    //         //547059684
+    //         bot.telegram.sendMessage('-1001374864884', `
+    //             Cuaca Hari Ini 
+    //             Date : ${new Date()} 
+    //             Location : ${response.data.name} 
+    //             Weather : ${response.data.weather[0].description}  
+    //             Temperature : ${response.data.main.temp} Celcius 
+    //             Min temperature : ${response.data.main.temp_min} Celcius 
+    //             Max temperature : ${response.data.main.temp_max} Celcius 
+    //             Wind speed : ${response.data.wind.speed} meter/sec
+    //         `);
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error);
+    //     })
 }, {
     scheduled: true,
     timezone: "Asia/Jakarta"
