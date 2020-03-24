@@ -84,7 +84,9 @@ routes.forEach(item => {
                     });
 
                     
-                    console.log(msg);
+                    bot.command(item.command, (ctx) => {
+                        ctx.reply(msg);
+                    });
                 })
                 .catch(console.error);
         } else {
