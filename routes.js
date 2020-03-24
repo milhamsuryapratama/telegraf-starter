@@ -4,6 +4,9 @@ const commands = [
     },
     {
         command: "status"
+    },
+    {
+        command: "covid19"
     }
 ];
 
