@@ -145,7 +145,9 @@ function covidNasional(route) {
 
             msg += "\n Sumber : https://www.kemkes.go.id/"
 
-            bot.telegram.sendMessage('-1001374864884', msg);
+            bot.command(route, (ctx) => {
+                ctx.reply(msg);
+            });
         })
         .catch(console.error);
 }
