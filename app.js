@@ -147,7 +147,7 @@ function covidJatim(route) {
         .then(response => {
             let msg = "Data Covid19 Jawa Timur \n";
             response.data.forEach(function (value, index) {
-                msg += `${value.kota} - ODP : ${value.odp} - PDP : ${value.pdp} - Positif : ${value.confirm} \n`;
+                msg += `${value.kota} - ODP : ${value.odp} - PDP : ${value.pdp} - Positif : ${value.confirm} \n\n`;
             })
             
             bot.command(route, (ctx) => {
