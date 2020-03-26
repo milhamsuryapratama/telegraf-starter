@@ -145,7 +145,7 @@ function covidNasional(route) {
 function covidJatim(route) {
     axios('http://bot-ilham.herokuapp.com/covid19jatim')
         .then(response => {
-            let msg = "Data Covid19 Jawa Timur \n";
+            let msg = "Data Covid19 Jawa Timur \n\n";
             response.data.forEach(function (value, index) {
                 msg += `${value.kota} - ODP : ${value.odp} - PDP : ${value.pdp} - Positif : ${value.confirm} \n\n`;
             })
