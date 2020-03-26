@@ -5,6 +5,7 @@ const axios = require('axios');
 const session = require('telegraf/session');
 
 const cheerio = require('cheerio');
+const find = require('cheerio-eq');
 
 const express = require('express');
 const app = express();
@@ -15,9 +16,53 @@ const bot = new Telegraf(config.botToken);
 bot.use(session());
 
 const url = 'https://www.kemkes.go.id/';
+const jatim = 'http://covid19dev.jatimprov.go.id/xweb/draxi';
 
 app.get('/', (req, res) => {
     res.send("HALO");
+});
+
+app.get('/covid19jatim', (req, res) => {
+    axios(jatim)
+        .then(response => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const jatimData = $('.table > tbody > tr');
+            const data = [];
+            jatimData.map(function (i) {
+                const kota = find($, `.table > tbody > tr:eq(${i}) > td:eq(0)`).text();
+                const odp = find($, `.table > tbody > tr:eq(${i}) > td:eq(1)`).text();
+                const pdp = find($, `.table > tbody > tr:eq(${i}) > td:eq(2)`).text();
+                const confirm = find($, `.table > tbody > tr:eq(${i}) > td:eq(3)`).text();
+                data.push({ kota, odp, pdp, confirm });
+            });
+            // console.log(data);
+            res.status(200).json(data);
+        })
+        .catch(console.error);
+});
+
+app.get('/covid19nasional', (req, res) => {
+    axios(url)
+        .then(response => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const statsTable = $('.info-case > table > tbody > tr');
+            const data = [];
+            statsTable.map(function (i) {
+                // if (i == 1) {
+                //     return false;
+                // }
+                const status = $(this).find('.description').text();
+                const jumlah = $(this).find('.case').text();
+                data.push({
+                    'status': status,
+                    'jumlah': jumlah
+                });
+            });
+            res.status(200).json(data);
+        })
+        .catch(console.error);
 });
 
 function formatDate(date) {
@@ -100,9 +145,7 @@ function covidNasional(route) {
 
             msg += "\n Sumber : https://www.kemkes.go.id/"
 
-            bot.command(route, (ctx) => {
-                ctx.reply(msg);
-            });
+            bot.telegram.sendMessage('-1001374864884', msg);
         })
         .catch(console.error);
 }
