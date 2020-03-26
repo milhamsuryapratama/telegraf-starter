@@ -24,22 +24,22 @@ app.get('/', (req, res) => {
 
 app.get('/covid19jatim', (req, res) => {
     axios(jatim)
-        .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const jatimData = $('.table > tbody > tr');
-            const data = [];
-            jatimData.map(function (i) {
-                const kota = find($, `.table > tbody > tr:eq(${i}) > td:eq(0)`).text();
-                const odp = find($, `.table > tbody > tr:eq(${i}) > td:eq(1)`).text();
-                const pdp = find($, `.table > tbody > tr:eq(${i}) > td:eq(2)`).text();
-                const confirm = find($, `.table > tbody > tr:eq(${i}) > td:eq(3)`).text();
-                data.push({ kota, odp, pdp, confirm });
-            });
-            // console.log(data);
-            res.status(200).json(data);
-        })
-        .catch(console.error);
+    .then(response => {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        const jatimData = $('.table > tbody > tr');
+        const data = [];
+        jatimData.map(function (i) {
+            const kota = find($, `.table > tbody > tr:eq(${i}) > td:eq(0)`).text();
+            const odp = find($, `.table > tbody > tr:eq(${i}) > td:eq(1)`).text();
+            const pdp = find($, `.table > tbody > tr:eq(${i}) > td:eq(2)`).text();
+            const confirm = find($, `.table > tbody > tr:eq(${i}) > td:eq(3)`).text();
+            data.push({ kota, odp, pdp, confirm });
+        });
+        // console.log(data);
+        res.status(200).json(data);
+    })
+    .catch(console.error); 
 });
 
 app.get('/covid19nasional', (req, res) => {
@@ -149,8 +149,6 @@ function covidJatim(route) {
             response.data.forEach(function (value, index) {
                 msg += `${value.kota} - ODP : ${value.odp} - PDP : ${value.pdp} - Positif : ${value.confirm} \n`;
             })
-
-            console.log(msg);
             
             bot.command(route, (ctx) => {
                 ctx.reply(msg);
