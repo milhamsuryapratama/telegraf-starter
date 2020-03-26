@@ -126,25 +126,13 @@ routes.forEach(item => {
 });
 
 function covidNasional(route) {
-    axios(url)
+    axios('http://bot-ilham.herokuapp.com/covid19nasional')
         .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const statsTable = $('.info-case > table > tbody > tr');
-            const data = [];
-            let msg = "Data Covdi19 Nasional. ";
-            statsTable.map(function (i) {
-                const status = $(this).find('.description').text();
-                const jumlah = $(this).find('.case').text();
-                data.push({
-                    'status': status,
-                    'jumlah': jumlah
-                });
-                msg += `\n \n ${status} : ${jumlah} \n `;
-            });
-
-            msg += "\n Sumber : https://www.kemkes.go.id/"
-
+            let msg = "Data Covid19 Nasional \n";
+            response.data.forEach(function (value, index) {
+                msg += `Status : ${value.status} : Jumlah ${value.jumlah} \n`;
+            })
+            
             bot.command(route, (ctx) => {
                 ctx.reply(msg);
             });
@@ -165,25 +153,13 @@ cron.schedule('0 */25 * * * *', () => {
 });
 
 cron.schedule('0 6 * * *', () => {
-    axios(url)
+    axios('http://bot-ilham.herokuapp.com/covid19nasional')
         .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const statsTable = $('.info-case > table > tbody > tr');
-            const data = [];
-            let msg = "Data Covdi19 Nasional. ";
-            statsTable.map(function (i) {
-                const status = $(this).find('.description').text();
-                const jumlah = $(this).find('.case').text();
-                data.push({
-                    'status': status,
-                    'jumlah': jumlah
-                });
-                msg += `\n \n ${status} : ${jumlah} \n `;
-            });
-
-            msg += "\n Sumber : https://www.kemkes.go.id/"
-
+            let msg = "Data Covid19 Nasional \n";
+            response.data.forEach(function (value, index) {
+                msg += `Status : ${value.status} : Jumlah ${value.jumlah} \n`;
+            })
+            
             bot.telegram.sendMessage('-1001374864884', msg);
         })
         .catch(console.error);
