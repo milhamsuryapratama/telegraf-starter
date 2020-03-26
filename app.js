@@ -109,6 +109,8 @@ routes.forEach(item => {
     if (item.command) {
         if (item.command == "covid19") {
             covidNasional(item.command);
+        } else if (item.command == "covid19jatim") {
+            covidJatim(item.command);
         } else {
             bot.command(item.command, (ctx) => {
                 const message = ctx.update.message.text;
@@ -132,6 +134,23 @@ function covidNasional(route) {
             response.data.forEach(function (value, index) {
                 msg += `Status : ${value.status} : Jumlah ${value.jumlah} \n`;
             })
+            
+            bot.command(route, (ctx) => {
+                ctx.reply(msg);
+            });
+        })
+        .catch(console.error);
+}
+
+function covidJatim(route) {
+    axios('http://bot-ilham.herokuapp.com/covid19jatim')
+        .then(response => {
+            let msg = "Data Covid19 Jawa Timur \n";
+            response.data.forEach(function (value, index) {
+                msg += `${value.kota} - ODP : ${value.odp} - PDP : ${value.pdp} - Positif : ${value.confirm} \n`;
+            })
+
+            console.log(msg);
             
             bot.command(route, (ctx) => {
                 ctx.reply(msg);
