@@ -146,7 +146,7 @@ function covidNasional(route) {
                     'status': status,
                     'jumlah': jumlah
                 });
-                msg += `Status : ${status} : Jumlah ${jumlah} \n`;
+                msg += `Status : ${status} - Jumlah : ${jumlah} \n`;
             });
 
             msg += kondisi;
@@ -204,7 +204,7 @@ cron.schedule('0 6 * * *', () => {
                     'status': status,
                     'jumlah': jumlah
                 });
-                msg += `Status : ${status} : Jumlah ${jumlah} \n`;
+                msg += `Status : ${status} - Jumlah : ${jumlah} \n`;
             });
             msg += kondisi;
             bot.telegram.sendMessage('-1001374864884', msg);
