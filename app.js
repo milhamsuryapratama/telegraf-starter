@@ -128,13 +128,25 @@ routes.forEach(item => {
 });
 
 function covidNasional(route) {
-    axios('http://bot-ilham.herokuapp.com/covid19nasional')
+    axios(url)
         .then(response => {
-            let msg = "Data Covid19 Nasional \n";
-            response.data.forEach(function (value, index) {
-                msg += `Status : ${value.status} : Jumlah ${value.jumlah} \n`;
-            })
-            
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const statsTable = $('.info-case > table > tbody > tr');
+            const data = [];
+            let msg = "Data Covid19 Nasional \n";                        
+            statsTable.map(function (i) {
+                // if (i == 1) {
+                //     return false;
+                // }
+                let status = $(this).find('.description').text();
+                let jumlah = $(this).find('.case').text();
+                data.push({
+                    'status': status,
+                    'jumlah': jumlah
+                });
+                msg += `Status : ${status} : Jumlah ${jumlah} \n`;
+            });
             bot.command(route, (ctx) => {
                 ctx.reply(msg);
             });
