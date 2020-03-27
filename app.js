@@ -133,6 +133,7 @@ function covidNasional(route) {
             const html = response.data;
             const $ = cheerio.load(html);
             const statsTable = $('.info-case > table > tbody > tr');
+            const kondisi = $('.ants-right-headline > .info-date').text();
             const data = [];
             let msg = "Data Covid19 Nasional \n";                        
             statsTable.map(function (i) {
@@ -147,6 +148,9 @@ function covidNasional(route) {
                 });
                 msg += `Status : ${status} : Jumlah ${jumlah} \n`;
             });
+
+            msg += kondisi;
+
             bot.command(route, (ctx) => {
                 ctx.reply(msg);
             });
@@ -187,6 +191,7 @@ cron.schedule('0 6 * * *', () => {
             const html = response.data;
             const $ = cheerio.load(html);
             const statsTable = $('.info-case > table > tbody > tr');
+            const kondisi = $('.ants-right-headline > .info-date').text();
             const data = [];
             let msg = "Data Covid19 Nasional \n";                        
             statsTable.map(function (i) {
@@ -201,6 +206,7 @@ cron.schedule('0 6 * * *', () => {
                 });
                 msg += `Status : ${status} : Jumlah ${jumlah} \n`;
             });
+            msg += kondisi;
             bot.telegram.sendMessage('-1001374864884', msg);
         })
         .catch(console.error);
